@@ -1,20 +1,23 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Base image for Terratest based on a go image which installs Terraform with all dependencies.
+
+The image creates a non-root user called **tquser**
+
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Install Docker I would recommend that Docker is set up to take advantage of WSL 2 (see https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+1.	Set up WSL 2
+2.	Install Ubuntu from Microsoft Store
+3.	Install Docker
+4.	Configure Docker to use WSL2
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Issue the following command to build the base image:
+```
+docker build . -t <IMAGE_NAME>
+```
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+For example:
+```
+docker build . -t tq-go-terraform/go-terraform:0.13.6-go.1.14.4 
+```
