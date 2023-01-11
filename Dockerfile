@@ -34,16 +34,6 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
     shasum -a 256 -c terraform_${TERRAFORM_VERSION}_SHA256SUMS 2>&1 | grep "${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}.zip:\sOK" && \
     unzip -o terraform_${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}.zip -d /usr/local/bin
 
-# Install Terratest Log Parser
-RUN curl -OLs https://github.com/gruntwork-io/terratest/releases/download/${TERRATEST_LOG_PARSER_VERSION}/terratest_log_parser_${TERRAFORM_OS_ARCH} && \
-    curl -OLs https://github.com/gruntwork-io/terratest/releases/download/${TERRATEST_LOG_PARSER_VERSION}/SHA256SUMS && \
-    shasum -a 256 -c SHA256SUMS 2>&1 | grep "terratest_log_parser_${TERRAFORM_OS_ARCH}:\sOK" && \
-    chmod +x terratest_log_parser_${TERRAFORM_OS_ARCH} && \
-    mv terratest_log_parser_${TERRAFORM_OS_ARCH} /usr/local/bin/terratest_log_parser
-
-# Install Terratest
-RUN install https://github.com/gruntwork-io/terratest/modules/terraform@${TERRATEST_VERSION}
-
 # Cleanup
 RUN rm terraform_${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}.zip && \
     rm terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
