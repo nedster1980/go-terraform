@@ -16,7 +16,7 @@ ENV PATH /usr/local/go/bin:$GOPATH/bin:$PATH
 
 
 # Install Terraform
-RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}zip && \
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}.zip && \
     curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
     curl -Os https://keybase.io/hashicorp/pgp_keys.asc && \
     gpg --import pgp_keys.asc && \
