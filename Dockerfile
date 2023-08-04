@@ -44,6 +44,7 @@ WORKDIR /go/src/${MODULE_NAME}
 RUN go mod init ${MODULE_NAME}
 RUN go mod tidy
 RUN go get -v -u github.com/gruntwork-io/terratest/modules/terraform@${TERRATEST_VERSION}
+RUN go get -v -u github.com/gruntwork-io/terratest/modules/azure@${TERRATEST_VERSION}
 RUN go install github.com/gruntwork-io/terratest/cmd/terratest_log_parser@${TERRATEST_VERSION}
 
 RUN useradd -m tquser
