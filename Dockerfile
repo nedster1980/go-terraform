@@ -3,10 +3,14 @@ FROM golang:1.19.10
 # Define environment variables
 ARG TERRAFORM_VERSION="1.1.9"
 ARG TERRAFORM_OS_ARCH="linux_amd64"
-ARG ARG_MODULE_NAME="terratest"
+ARG MODULE_NAME="terratest"
+ARG TERRATEST_VERSION="v0.41.3"
 
 ENV TERRAFORM_VERSION=${TERRAFORM_VERSION}
 ENV TERRAFORM_OS_ARCH=${TERRAFORM_OS_ARCH}
+ENV MODULE_NAME=${MODULE_NAME}
+ENV TERRATEST_VERSION=${TERRATEST_VERSION}
+
 
 
 
@@ -39,7 +43,7 @@ WORKDIR /go/src/${MODULE_NAME}
 
 RUN go mod init ${MODULE_NAME}
 RUN go mod tidy
-go get -v -u github.com/gruntwork-io/terratest/modules/terraform@v0.41.3
-go install github.com/gruntwork-io/terratest/cmd/terratest_log_parser@v0.41.3
+RUN go get -v -u github.com/gruntwork-io/terratest/modules/terraform@${TERRATEST_VERSION}
+RUN go install github.com/gruntwork-io/terratest/cmd/terratest_log_parser@${TERRATEST_VERSION}
 
 RUN useradd -m tquser
