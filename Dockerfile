@@ -38,7 +38,7 @@ RUN rm terraform_${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}.zip && \
     rm terraform_${TERRAFORM_VERSION}_SHA256SUMS.72D7468F.sig
 
 # Set work directory and install terratest stuff to docker image
-RUN mkdir /go/src/${ARG_MODULE_NAME}
+RUN mkdir /go/src/${MODULE_NAME}
 WORKDIR /go/src/${MODULE_NAME}
 
 RUN go mod init ${MODULE_NAME}
