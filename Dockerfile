@@ -1,21 +1,23 @@
-FROM golang:1.19.10
+FROM golang:1.19.12
+LABEL maintainer="Nedster1980"
 
 # Define environment variables
 ARG TERRAFORM_VERSION="1.1.9"
 ARG TERRAFORM_OS_ARCH="linux_amd64"
-ARG MODULE_NAME="terratest"
-ARG TERRATEST_VERSION="v0.41.3"
+ARG UID=1000
+ARG GID=1000
+ARG USER=tqterratest
+ARG GROUP=tqterratest
+ARG TERRATEST_HOME=/tqterratest
 
 ENV TERRAFORM_VERSION=${TERRAFORM_VERSION}
 ENV TERRAFORM_OS_ARCH=${TERRAFORM_OS_ARCH}
-ENV MODULE_NAME=${MODULE_NAME}
-ENV TERRATEST_VERSION=${TERRATEST_VERSION}
 
 
 
 
 # Update & Install tool
-RUN apt-get update && apt-get install -y unzip openssh-client
+RUN apt-get update && apt-get install -y curl unzip openssh-client
 
 # Install dep.
 ENV GOPATH /go
@@ -37,14 +39,11 @@ RUN rm terraform_${TERRAFORM_VERSION}_${TERRAFORM_OS_ARCH}.zip && \
     rm terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
     rm terraform_${TERRAFORM_VERSION}_SHA256SUMS.72D7468F.sig
 
-# Set work directory and install terratest stuff to docker image
-RUN mkdir /go/src/${MODULE_NAME}
-WORKDIR /go/src/${MODULE_NAME}
+RUN mkdir -p ${TERRATEST_HOME} \
+    && chown -R ${UID}:${GID} $TERRATEST_HOME \
+    && groupadd -g ${GID} ${GROUP} \
+    && useradd -d "$TERRATEST_HOME" -u ${UID} -g ${GID} -m -s /bin/bash ${USER}
 
-RUN go mod init ${MODULE_NAME}
-RUN go mod tidy
-RUN go get -v -u github.com/gruntwork-io/terratest/modules/terraform@${TERRATEST_VERSION}
-RUN go get -v -u github.com/gruntwork-io/terratest/modules/azure@${TERRATEST_VERSION}
-RUN go install github.com/gruntwork-io/terratest/cmd/terratest_log_parser@${TERRATEST_VERSION}
+USER ${USER}
 
-RUN useradd -m tquser
+WORKDIR $GOPATH/src/app/test/

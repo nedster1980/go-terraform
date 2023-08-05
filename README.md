@@ -1,4 +1,4 @@
-# Introduction 
+test# Introduction 
 Base image for Terratest based on a go image which installs Terraform with all dependencies.
 
 The image creates a non-root user called **tquser**
@@ -21,3 +21,18 @@ For example:
 ```
 docker build . -t tq-go-terraform/go-terraform:0.13.6-go.1.14.4 
 ```
+
+# Users
+The docker image built creates the following arguments to create a tqterratest user:
+ARG UID=1000
+ARG GID=1000
+ARG USER=tqterratest
+ARG GROUP=tqterratest
+ARG TERRATEST_HOME=/tqterratest
+
+# Working Directory
+The working directory of the docker image is
+
+$GOPATH/src/app/test/
+
+
