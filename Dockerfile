@@ -2,7 +2,7 @@ FROM golang:1.19.12
 LABEL maintainer="Nedster1980"
 
 # Define environment variables
-ARG TERRAFORM_VERSION="1.1.9"
+ARG TERRAFORM_VERSION="1.6.2"
 ARG TERRAFORM_OS_ARCH="linux_amd64"
 ARG UID=1000
 ARG GID=1000
